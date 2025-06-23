@@ -1,14 +1,23 @@
 @import "tailwindcss";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+@import url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/ChangwonDangamAsac.woff");
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Pretendard", Arial, Helvetica, sans-serif;
+  font-family: "ChangwonDangamAsac", Pretendard, Arial, Helvetica, sans-serif;
   text-align: right;
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: 100%;
+}
+
+@font-face {
+  font-family: "ChangwonDangamAsac";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/ChangwonDangamAsac.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
