@@ -1,3 +1,5 @@
-export const Introduce = () => {
+const Introduce = () => {
   return <></>;
 };
+
+export default Introduce;
