@@ -34,7 +34,7 @@ export const Header = () => {
               key={x.title}
               onClick={() => handlePath(x.path)}
               className={cn(
-                "flex py-2.5 px-4 items-center justify-center gap-2.5 cursor-pointe flex-row",
+                "flex py-2.5 px-4 items-center justify-center gap-2.5 cursor-pointer flex-row",
                 pathname === x.path
                   ? "bg-[#4E71DB] text-white"
                   : "bg-white text-[#4E71DB]"
