@@ -113,6 +113,9 @@ const Introduce = () => {
                           ? "scale-95 opacity-0"
                           : "scale-100 opacity-100"
                       }`}
+                      onClick={() =>
+                        handlePath(`/recommand/${data[currentIndex].TITLE}`)
+                      }
                     >
                       <Image
                         src={data[currentIndex].poster}
