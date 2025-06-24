@@ -14,7 +14,7 @@ export interface MoviePreference {
 }
 
 export const fetchIntroduce = async (): Promise<MoviePreference[]> => {
-  const response = await fetch("http://localhost:4000/introduce", {
+  const response = await fetch("/api/introduce", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

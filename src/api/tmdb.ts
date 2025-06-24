@@ -157,3 +157,34 @@ export const fetchPopularMovies = async (): Promise<MovieInfo[]> => {
     return [];
   }
 };
+
+export const submitRating = async (
+  movieId: string,
+  movieTitle: string,
+  rating: number
+) => {
+  try {
+    const response = await fetch("/api/ratings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT 토큰
+      },
+      body: JSON.stringify({
+        movieId,
+        movieTitle,
+        rating,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "평점 등록에 실패했습니다.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("평점 등록 에러:", error);
+    throw error;
+  }
+};
