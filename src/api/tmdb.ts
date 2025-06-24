@@ -12,10 +12,17 @@ interface TMDBResponse {
 
 export const fetchMoviePoster = async (title: string): Promise<string> => {
   try {
+    const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+
+    if (!apiKey) {
+      console.error("TMDB API key is not set");
+      return "";
+    }
+
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=YOUR_TMDB_API_KEY&query=${encodeURIComponent(
+      `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
         title
-      )}&language=ko-KR`,
+      )}&language=ko-KR&api_key=${apiKey}`,
       {
         method: "GET",
         headers: {

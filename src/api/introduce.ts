@@ -1,4 +1,4 @@
-import { fetchMoviePoster } from "./imdb";
+import { fetchMoviePoster } from "./tmdb";
 
 export interface MoviePreference {
   TITLE: string;

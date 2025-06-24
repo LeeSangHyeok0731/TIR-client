@@ -25,7 +25,7 @@ export const Header = () => {
   };
 
   return (
-    <div className="flex py-6 px-44 justify-between items-center w-full h-[88px]">
+    <div className="flex py-6 px-44 justify-between items-center w-full h-[88px] border">
       <TirLogo />
       <div className="flex items-center gap-[61px] ">
         {MenuArray.map((x: MenuType) => {
