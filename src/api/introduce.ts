@@ -1,4 +1,5 @@
 import { fetchMoviePoster } from "./tmdb";
+import axiosInstance from "@/utils/axiosInstance";
 
 export interface MoviePreference {
   TITLE: string;
@@ -14,18 +15,12 @@ export interface MoviePreference {
 }
 
 export const fetchIntroduce = async (): Promise<MoviePreference[]> => {
-  const response = await fetch("/api/introduce", {
-    method: "GET",
+  const response = await axiosInstance.get("/api/introduce", {
     headers: {
       "Content-Type": "application/json",
     },
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch introduce data");
-  }
-
-  const movies: MoviePreference[] = await response.json();
+  const movies: MoviePreference[] = response.data;
 
   const moviesWithPosters = await Promise.all(
     movies.map(async (movie) => {
