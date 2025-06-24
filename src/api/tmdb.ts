@@ -164,7 +164,7 @@ export const submitRating = async (
   rating: number
 ) => {
   try {
-    const response = await fetch("/api/ratings", {
+    const response = await fetch("/api/rating", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
