@@ -1,3 +1,5 @@
+import { fetchMoviePoster } from "./imdb";
+
 export interface MoviePreference {
   TITLE: string;
   RATING: number;
@@ -8,10 +10,11 @@ export interface MoviePreference {
   MANGR: number;
   WOMANGR: number;
   PREFER: "man" | "woman";
+  poster?: string;
 }
 
 export const fetchIntroduce = async (): Promise<MoviePreference[]> => {
-  const response = await fetch("https://localhost:4000/introduce", {
+  const response = await fetch("http://localhost:4000/introduce", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -22,5 +25,25 @@ export const fetchIntroduce = async (): Promise<MoviePreference[]> => {
     throw new Error("Failed to fetch introduce data");
   }
 
-  return response.json();
+  const movies: MoviePreference[] = await response.json();
+
+  const moviesWithPosters = await Promise.all(
+    movies.map(async (movie) => {
+      try {
+        const poster = await fetchMoviePoster(movie.TITLE);
+        return {
+          ...movie,
+          poster,
+        };
+      } catch (error) {
+        console.error(`Error fetching poster for ${movie.TITLE}:`, error);
+        return {
+          ...movie,
+          poster: "",
+        };
+      }
+    })
+  );
+
+  return moviesWithPosters;
 };
