@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { fetchMovieInfo, MovieInfo } from "@/api/tmdb";
+import { fetchMovieInfo, MovieInfo, submitRating } from "@/api/tmdb";
 
 const MovieRatingPage = () => {
   const params = useParams();
@@ -11,6 +11,7 @@ const MovieRatingPage = () => {
   const [movieData, setMovieData] = useState<MovieInfo | null>(null);
   const [userRating, setUserRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,11 +37,26 @@ const MovieRatingPage = () => {
     fetchMovieData();
   }, [movieTitle]);
 
-  const handleRatingSubmit = () => {
-    if (userRating > 0) {
-      // 실제 구현에서는 API로 평점을 전송해야 합니다
-      console.log(`${movieTitle}에 ${userRating}점을 매겼습니다.`);
-      alert("평점이 성공적으로 등록되었습니다!");
+  const handleRatingSubmit = async () => {
+    if (userRating > 0 && movieData) {
+      setIsSubmitting(true);
+      setError(null);
+
+      try {
+        await submitRating(
+          movieData.id.toString(),
+          movieData.title,
+          userRating
+        );
+        alert("평점이 성공적으로 등록되었습니다!");
+      } catch (error) {
+        console.error("평점 등록 실패:", error);
+        setError(
+          error instanceof Error ? error.message : "평점 등록에 실패했습니다."
+        );
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -151,12 +167,15 @@ const MovieRatingPage = () => {
                       </div>
                       <button
                         onClick={handleRatingSubmit}
-                        disabled={userRating === 0}
+                        disabled={userRating === 0 || isSubmitting}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                       >
-                        평점 등록
+                        {isSubmitting ? "등록 중..." : "평점 등록"}
                       </button>
                     </div>
+                    {error && (
+                      <div className="mt-2 text-sm text-red-600">{error}</div>
+                    )}
                   </div>
 
                   {/* 영화 설명 */}
