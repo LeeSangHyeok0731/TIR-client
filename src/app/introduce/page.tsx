@@ -99,6 +99,9 @@ const Introduce = () => {
           </div>
         ) : (
           <div className="absolute left-[1000px]">
+            <div className="absolute z-10">
+              <Image src="/ticket.png" alt="ticket" width={150} height={150} />
+            </div>
             {/* 영화 포스터 슬라이더 */}
             {data && data.length > 0 && (
               <div className="mt-8">
