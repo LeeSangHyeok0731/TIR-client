@@ -128,7 +128,7 @@ const Introduce = () => {
                   )}
                 </div>
                 {/* 인디케이터 */}
-                <div className="flex justify-center mt-4 space-x-2">
+                {/* <div className="flex justify-center mt-4 space-x-2">
                   {Array.isArray(data) &&
                     data.map((_, index: number) => (
                       <div
@@ -140,7 +140,7 @@ const Introduce = () => {
                         }`}
                       />
                     ))}
-                </div>
+                </div> */}
               </div>
             )}
           </div>

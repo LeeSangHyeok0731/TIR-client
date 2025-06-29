@@ -3,32 +3,46 @@
 import TirLogo from "@/asset/tirLogo";
 import { cn } from "@/utils";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type MenuType = {
   title: string;
   path: string;
 };
 
-const MenuArray = [
+const baseMenuArray = [
   { title: "개요", path: "/introduce" },
   { title: "작품추천 받기", path: "/recommand" },
   { title: "후원하기", path: "/donation" },
-  { title: "로그인", path: "/login" },
 ];
 
 export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const [menuArray, setMenuArray] = useState<MenuType[]>([
+    ...baseMenuArray,
+    { title: "로그인", path: "/login" },
+  ]);
 
   const handlePath = (path: string) => {
     router.push(path);
   };
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      setMenuArray([...baseMenuArray, { title: "프로필", path: "/profile" }]);
+    } else {
+      setMenuArray([...baseMenuArray, { title: "로그인", path: "/login" }]);
+    }
+  }, []);
+
   return (
     <div className="flex py-6 px-44 justify-between items-center w-full h-[88px] border">
       <TirLogo />
       <div className="flex items-center gap-[61px] ">
-        {MenuArray.map((x: MenuType) => {
+        {menuArray.map((x: MenuType) => {
           return (
             <div
               key={x.title}
