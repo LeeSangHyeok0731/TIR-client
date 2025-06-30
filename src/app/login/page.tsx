@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import axiosInstance from "@/utils/axiosInstance";
 
 type loginType = {
@@ -24,6 +25,7 @@ const Login = () => {
       const { accessToken } = response.data;
       if (accessToken) {
         Cookies.set("accessToken", accessToken, { path: "/" });
+        toast.success("로그인에 성공했습니다!");
         router.push("/introduce");
       } else {
         throw new Error("토큰이 없습니다.");
@@ -40,11 +42,11 @@ const Login = () => {
         typeof error.response.data === "object" &&
         "message" in error.response.data
       ) {
-        alert((error.response.data as any).message);
+        toast.error((error.response.data as any).message);
       } else if (error instanceof Error) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert("알 수 없는 에러");
+        toast.error("알 수 없는 에러가 발생했습니다.");
       }
     }
   };

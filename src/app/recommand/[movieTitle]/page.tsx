@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { toast } from "react-toastify";
 import { fetchMovieInfo, MovieInfo, submitRating } from "@/api/tmdb";
 
 const MovieRatingPage = () => {
@@ -48,7 +49,7 @@ const MovieRatingPage = () => {
           movieData.title,
           userRating
         );
-        alert("평점이 성공적으로 등록되었습니다!");
+        toast.success("평점이 성공적으로 등록되었습니다!");
       } catch (error) {
         console.error("평점 등록 실패:", error);
         setError(
