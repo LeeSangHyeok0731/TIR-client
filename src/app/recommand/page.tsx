@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useIntroduce } from "@/hooks/useIntroduce";
+import { useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { FaMars, FaVenus } from "react-icons/fa";
 
 type MovieWithTMDB = {
   TITLE: string;
@@ -22,9 +25,41 @@ type MovieWithTMDB = {
   overview?: string;
 };
 
+const genres = [
+  "액션",
+  "스릴러",
+  "범죄",
+  "SF",
+  "드라마",
+  "모험",
+  "코미디",
+  "판타지",
+  "가족",
+  "로맨스",
+  "뮤지컬",
+  "역사",
+  "정치",
+  "전기",
+  "공포",
+  "미스터리",
+  "애니메이션",
+  "스포츠",
+  "다큐멘터리",
+  "음악",
+  "어드벤처",
+  "디스토피아",
+  "사이언스 픽션",
+  "스파이",
+  "좀비",
+  "법정",
+];
+
 const Recommand = () => {
   const router = useRouter();
   const { data: movies, isLoading, error } = useIntroduce();
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleMovieClick = (movieTitle: string) => {
     const encodedTitle = encodeURIComponent(movieTitle);
@@ -162,6 +197,161 @@ const Recommand = () => {
             );
           })}
         </div>
+
+        <div className="mt-12 flex flex-col items-center">
+          {/* 1. 장르로 추천받기 텍스트 */}
+          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">
+            장르로 추천받기
+          </h2>
+
+          {/* 2. 성별 선택 버튼 */}
+          <div className="flex justify-center gap-8 mb-8">
+            {[
+              {
+                label: "남성",
+                icon: (
+                  <FaMars className="inline-block mr-2 text-[#6C7AF2] text-xl" />
+                ),
+                selectedBg: "bg-pink-100",
+                selectedBorder: "border-pink-400",
+                baseText: "text-[#6C7AF2]",
+                baseBorder: "border-[#6C7AF2]",
+                baseBg: "bg-white",
+              },
+              {
+                label: "여성",
+                icon: (
+                  <FaVenus className="inline-block mr-2 text-pink-400 text-xl" />
+                ),
+                selectedBg: "bg-blue-100",
+                selectedBorder: "border-[#6C7AF2]",
+                baseText: "text-pink-400",
+                baseBorder: "border-pink-400",
+                baseBg: "bg-white",
+              },
+            ].map(
+              ({
+                label,
+                icon,
+                selectedBg,
+                selectedBorder,
+                baseText,
+                baseBorder,
+                baseBg,
+              }) => {
+                const isSelected = selectedGender === label;
+                return (
+                  <button
+                    key={label}
+                    type="button"
+                    className={
+                      `flex items-center justify-center w-32 h-12 rounded-2xl font-bold text-lg shadow-lg border-2 transition-all duration-200 ` +
+                      `${
+                        isSelected
+                          ? `${selectedBg} ${baseText} ${selectedBorder} scale-105`
+                          : `${baseBg} ${baseText} ${baseBorder}`
+                      } ` +
+                      `hover:scale-105 hover:border-[#6C7AF2] hover:shadow-xl`
+                    }
+                    style={{
+                      letterSpacing: "0.02em",
+                    }}
+                    onClick={() => setSelectedGender(label)}
+                  >
+                    {icon}
+                    {label}
+                  </button>
+                );
+              }
+            )}
+          </div>
+
+          {/* 3. 장르 선택 버튼들 */}
+          <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto mb-8">
+            {genres.map((genre: string) => {
+              const isSelected = selectedGenres.includes(genre);
+              return (
+                <button
+                  key={genre}
+                  type="button"
+                  className={
+                    `flex items-center justify-center py-3 px-5 m-1 rounded-2xl font-semibold shadow-md border-2 transition-all duration-200 text-base outline-none focus:ring-2 focus:ring-[#6C7AF2] ` +
+                    `${
+                      isSelected
+                        ? "bg-[#6C7AF2] text-white border-[#6C7AF2] scale-105"
+                        : "bg-white text-[#6C7AF2] border-gray-200"
+                    } ` +
+                    `hover:scale-105 hover:border-[#6C7AF2] hover:shadow-xl`
+                  }
+                  style={{
+                    letterSpacing: "0.02em",
+                  }}
+                  onClick={() => {
+                    setSelectedGenres((prev) =>
+                      isSelected
+                        ? prev.filter((g) => g !== genre)
+                        : [...prev, genre]
+                    );
+                  }}
+                >
+                  {genre}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 4. 검색 버튼 */}
+          <div className="flex justify-center mt-2">
+            <button
+              type="button"
+              className={`w-40 h-11 rounded-xl font-bold text-lg shadow-md transition-all duration-200 border-none outline-none focus:ring-2 focus:ring-[#6C7AF2] ${
+                selectedGenres.length > 0 && selectedGender
+                  ? "bg-[#6C7AF2] text-white hover:bg-[#4e5edb]"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              }`}
+              disabled={selectedGenres.length === 0 || !selectedGender}
+              onClick={async () => {
+                if (selectedGenres.length > 0 && selectedGender) {
+                  const genderMap: Record<string, string> = {
+                    남성: "man",
+                    여성: "woman",
+                  };
+                  const genderValue =
+                    genderMap[selectedGender] || selectedGender;
+                  setLoading(true);
+                  try {
+                    const res = await axiosInstance.post(
+                      "/api/genre-recommends",
+                      {
+                        genres: selectedGenres,
+                        gender: genderValue,
+                      }
+                    );
+                    // 결과를 localStorage에 저장 후 /genre-recommand로 이동
+                    localStorage.setItem(
+                      "genreRecommandResults",
+                      JSON.stringify(res.data?.results || res.data || [])
+                    );
+                    router.push("/genre-recommand");
+                  } catch {
+                    alert("추천 요청에 실패했습니다.");
+                  } finally {
+                    setLoading(false);
+                  }
+                }
+              }}
+            >
+              검색
+            </button>
+          </div>
+        </div>
+
+        {/* 추천 결과 리스트 */}
+        {loading && (
+          <div className="flex justify-center mt-8 text-lg text-gray-600">
+            로딩 중...
+          </div>
+        )}
       </div>
     </div>
   );
