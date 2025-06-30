@@ -50,8 +50,14 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex justify-between items-center mb-12">
-          <div className="text-center flex-1">
+        <div className="relative mb-12">
+          <button
+            onClick={handleLogout}
+            className="absolute top-0 right-0 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl z-10"
+          >
+            로그아웃
+          </button>
+          <div className="text-center">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
               내 평점 목록
             </h1>
@@ -59,12 +65,6 @@ const Profile = () => {
               평가한 영화들을 한눈에 확인해보세요
             </p>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-          >
-            로그아웃
-          </button>
         </div>
 
         {ratings && ratings.length > 0 ? (
