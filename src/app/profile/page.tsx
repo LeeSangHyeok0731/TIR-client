@@ -3,6 +3,8 @@
 import { useRatings } from "@/hooks/useRatings";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Profile = () => {
   const router = useRouter();
@@ -10,6 +12,13 @@ const Profile = () => {
 
   const handleRouting = (movieTitle: string) => {
     router.push(`/recommand/${movieTitle}`);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("accessToken", { path: "/" });
+    localStorage.removeItem("accessToken");
+    toast.success("로그아웃되었습니다.");
+    router.push("/introduce");
   };
 
   useEffect(() => {
@@ -38,13 +47,21 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            내 평점 목록
-          </h1>
-          <p className="text-gray-600 text-lg">
-            평가한 영화들을 한눈에 확인해보세요
-          </p>
+        <div className="flex justify-between items-center mb-12">
+          <div className="text-center flex-1">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              내 평점 목록
+            </h1>
+            <p className="text-gray-600 text-lg">
+              평가한 영화들을 한눈에 확인해보세요
+            </p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            로그아웃
+          </button>
         </div>
 
         {ratings && ratings.length > 0 ? (
