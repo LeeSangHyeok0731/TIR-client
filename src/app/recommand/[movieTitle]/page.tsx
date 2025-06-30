@@ -112,7 +112,7 @@ const MovieRatingPage = () => {
       <div className="max-w-4xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* 헤더 */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+          <div className="bg-blue-600 text-white p-6">
             <h1 className="text-3xl font-bold">{movieData.title}</h1>
             <p className="text-blue-100 mt-2">
               {movieData.releaseDate && `개봉일: ${movieData.releaseDate}`}

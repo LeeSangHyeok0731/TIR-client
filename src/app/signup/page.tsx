@@ -47,7 +47,7 @@ const Signup = () => {
         typeof e.response.data === "object" &&
         "message" in e.response.data
       ) {
-        toast.error((e.response.data as any).message);
+        toast.error((e.response.data as { message: string }).message);
       } else if (e instanceof Error) {
         toast.error(e.message);
       } else {

@@ -48,17 +48,17 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-6">
         <div className="relative mb-12">
           <button
             onClick={handleLogout}
-            className="absolute top-0 right-0 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl z-10"
+            className="absolute top-0 right-0 bg-red-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl z-10"
           >
             로그아웃
           </button>
           <div className="text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            <h1 className="text-4xl font-bold text-blue-600 mb-4">
               내 평점 목록
             </h1>
             <p className="text-gray-600 text-lg">
@@ -75,8 +75,8 @@ const Profile = () => {
                 className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100 cursor-pointer"
                 onClick={() => handleRouting(rating.MOVIE_TITLE)}
               >
-                {/* 그라데이션 배경 오버레이 */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* 단색 배경 오버레이 */}
+                <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                 <div className="relative p-6">
                   {/* 영화 제목 */}
@@ -104,7 +104,7 @@ const Profile = () => {
 
                   {/* 평점 점수 */}
                   <div className="text-center mb-4">
-                    <span className="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-full text-lg font-semibold shadow-md">
+                    <span className="inline-block bg-blue-500 text-white px-4 py-2 rounded-full text-lg font-semibold shadow-md">
                       {rating.RATING}/5
                     </span>
                   </div>
@@ -142,7 +142,7 @@ const Profile = () => {
                   </div>
 
                   {/* 호버 효과를 위한 장식 요소 */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-blue-500/10 to-purple-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
               </div>
             ))}
@@ -150,7 +150,7 @@ const Profile = () => {
         ) : (
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-6 bg-blue-100 rounded-full flex items-center justify-center">
                 <span className="text-4xl">🎬</span>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -161,7 +161,7 @@ const Profile = () => {
               </p>
               <button
                 onClick={() => router.push("/recommand")}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 영화 추천받기
               </button>
