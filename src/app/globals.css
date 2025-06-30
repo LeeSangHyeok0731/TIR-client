@@ -22,3 +22,16 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+/* react-toastify 폰트 크기 조정 */
+.Toastify__toast {
+  font-size: 14px !important;
+}
+
+.Toastify__toast-body {
+  font-size: 14px !important;
+}
+
+.Toastify__toast-icon {
+  font-size: 16px !important;
+}
