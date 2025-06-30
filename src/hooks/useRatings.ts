@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface Rating {
   ID: number;
@@ -19,14 +19,8 @@ export const useRatings = () => {
     const fetchRatings = async () => {
       try {
         setIsLoading(true);
-        const response = await fetchWithAuth("/ratings");
-
-        if (!response.ok) {
-          throw new Error("평점 데이터를 가져오는데 실패했습니다.");
-        }
-
-        const ratingsData = await response.json();
-        setData(ratingsData);
+        const response = await axiosInstance.get("/api/ratings");
+        setData(response.data);
       } catch (err) {
         setError(
           err instanceof Error
