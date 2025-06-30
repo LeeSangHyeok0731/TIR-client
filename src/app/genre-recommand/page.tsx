@@ -86,9 +86,7 @@ const GenreRecommand = () => {
         {results.length === 0 ? (
           <div className="text-center text-gray-500">추천 결과가 없습니다.</div>
         ) : loading ? (
-          <div className="text-center text-gray-500">
-            TMDB 정보 불러오는 중...
-          </div>
+          <div className="text-center text-gray-500">정보 불러오는 중...</div>
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {results.map((item, idx) => {
