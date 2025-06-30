@@ -29,13 +29,19 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (accessToken) {
-      setMenuArray([...baseMenuArray, { title: "프로필", path: "/profile" }]);
-    } else {
-      setMenuArray([...baseMenuArray, { title: "로그인", path: "/login" }]);
-    }
+    const updateMenu = () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        setMenuArray([...baseMenuArray, { title: "프로필", path: "/profile" }]);
+      } else {
+        setMenuArray([...baseMenuArray, { title: "로그인", path: "/login" }]);
+      }
+    };
+    updateMenu();
+    window.addEventListener("storage", updateMenu);
+    return () => {
+      window.removeEventListener("storage", updateMenu);
+    };
   }, []);
 
   return (

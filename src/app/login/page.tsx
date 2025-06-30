@@ -25,6 +25,13 @@ const Login = () => {
       const { accessToken } = response.data;
       if (accessToken) {
         Cookies.set("accessToken", accessToken, { path: "/" });
+        localStorage.setItem("accessToken", accessToken);
+        window.dispatchEvent(
+          new StorageEvent("storage", {
+            key: "accessToken",
+            newValue: accessToken,
+          })
+        );
         toast.success("로그인에 성공했습니다!");
         router.push("/introduce");
       } else {

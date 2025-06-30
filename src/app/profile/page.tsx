@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { useAuth } from "@/components/AuthContext";
 
 const Profile = () => {
   const router = useRouter();
   const { data: ratings, isLoading, error } = useRatings();
+  const { setIsLoggedIn } = useAuth();
 
   const handleRouting = (movieTitle: string) => {
     router.push(`/recommand/${movieTitle}`);
@@ -17,6 +19,7 @@ const Profile = () => {
   const handleLogout = () => {
     Cookies.remove("accessToken", { path: "/" });
     localStorage.removeItem("accessToken");
+    setIsLoggedIn(false);
     toast.success("로그아웃되었습니다.");
     router.push("/introduce");
   };
