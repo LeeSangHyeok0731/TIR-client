@@ -34,6 +34,9 @@ const Donation = () => {
             <p className="text-gray-600 mb-2">
               QR 코드를 스캔하여 후원해주세요
             </p>
+            <p className="text-blue-600 font-semibold mb-2">
+              권장 후원금: 1,000원
+            </p>
             <p className="text-sm text-gray-500">
               * QR 코드를 통해 간편하게 후원하실 수 있습니다
             </p>
@@ -53,6 +56,9 @@ const Donation = () => {
             </div>
             <p className="text-gray-600 mb-2">
               QR 코드를 스캔하여 후원해주세요
+            </p>
+            <p className="text-blue-600 font-semibold mb-2">
+              권장 후원금: 1,000원
             </p>
             <p className="text-sm text-gray-500">
               * QR 코드를 통해 간편하게 후원하실 수 있습니다
