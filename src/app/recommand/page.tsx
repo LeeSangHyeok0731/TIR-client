@@ -251,7 +251,9 @@ const Recommand = () => {
                           ? `${selectedBg} ${baseText} ${selectedBorder} scale-105`
                           : `${baseBg} ${baseText} ${baseBorder}`
                       } ` +
-                      `hover:scale-105 hover:border-[#6C7AF2] hover:shadow-xl`
+                      `hover:scale-105 hover:shadow-xl ${
+                        label === "남성" ? "hover:border-[#6C7AF2]" : ""
+                      }`
                     }
                     style={{
                       letterSpacing: "0.02em",
